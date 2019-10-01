@@ -12,15 +12,14 @@ class Service {
     
     static let sharedInstance = Service()
     
-    func fetchStarWarFilms(Completion: @escaping (StarWar?, Error?) -> ()) {
+    func fetchStarWarFilms(completion: @escaping (Result<StarWar?, Error>) -> ()) {
         
         guard let url = URL(string: filmsUrl) else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             if let error = error {
-                print(error.localizedDescription)
-                Completion(nil, error)
+                completion(.failure(error))
                 return
             }
             
@@ -29,26 +28,24 @@ class Service {
             do {
                 let starWar = try JSONDecoder().decode(StarWar.self, from: data)
                 DispatchQueue.main.async {
-                    Completion(starWar, nil) 
+                    completion(.success(starWar))
                 }
                 
             } catch let jsonErr {
-                print(jsonErr.localizedDescription)
-                Completion(nil, jsonErr)
+                completion(.failure(jsonErr))
             }
             
             
-            }.resume()
+        }.resume()
     }
     
-    func fetchMostAppearedCharacterName(_ string: String, completion: @escaping (Character?, Error?) -> ()) {
+    func fetchMostAppearedCharacterName(_ string: String, completion: @escaping (Result<Character, Error>) -> ()) {
         
         guard let url = URL(string: string) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
-                print(error.localizedDescription)
-                completion(nil, error)
+                completion(.failure(error))
                 return
             }
             
@@ -56,24 +53,22 @@ class Service {
                 guard let data = data else { return }
                 let characterJson = try JSONDecoder().decode(Character.self, from: data)
                 DispatchQueue.main.async {
-                    completion(characterJson, nil)
+                    completion(.success(characterJson))
                 }
                 
             } catch let jsonErr {
-                print(jsonErr.localizedDescription)
-                completion(nil, jsonErr)
+                completion(.failure(jsonErr))
             }
-            }.resume()
+        }.resume()
     }
     
-    func fetchMostAppearedSpeciesName(_ string: String, completion: @escaping (Species?, Error?) -> ()) {
+    func fetchMostAppearedSpeciesName(_ string: String, completion: @escaping (Result<Species, Error>) -> ()) {
         
         guard let url = URL(string: string) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
-                print(error.localizedDescription)
-                completion(nil, error)
+                completion(.failure(error))
                 return
             }
             
@@ -81,13 +76,12 @@ class Service {
                 guard let data = data else { return }
                 let speciesJson = try JSONDecoder().decode(Species.self, from: data)
                 DispatchQueue.main.async {
-                    completion(speciesJson, nil)
+                    completion(.success(speciesJson))
                 }
                 
             } catch let jsonErr {
-                print(jsonErr.localizedDescription)
-                completion(nil, jsonErr)
+                completion(.failure(jsonErr))
             }
-            }.resume()
+        }.resume()
     }
 }

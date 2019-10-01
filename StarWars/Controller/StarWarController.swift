@@ -44,7 +44,7 @@ class StarWarController: UIViewController {
     }()
     
     lazy var speciesAppearedMostQuestionLabel: UILabel = {
-       createSpeciesAppearedMostQuestionLabel()
+        createSpeciesAppearedMostQuestionLabel()
     }()
     
     lazy var speciesAppearedMostAnswerLabel: UILabel = {
@@ -60,7 +60,7 @@ class StarWarController: UIViewController {
     }()
     
     // MARK: - ViewController LifyCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,19 +71,20 @@ class StarWarController: UIViewController {
     // MARK: -  Helper Functions
     
     fileprivate func getAnswers() {
-        Service.sharedInstance.fetchStarWarFilms { [unowned self] (starWar, error) in
-            if let error = error {
+        activityIndicatorView.startAnimating()
+        Service.sharedInstance.fetchStarWarFilms { [unowned self] (res) in
+            
+            switch res {
+            case .success(let starWarJson):
+                guard let films = starWarJson?.results else { return }
+                
+                self.getMovieHavingLongestOpeningCrawl(films)
+                self.getMostAppearedCharacterInFilms(films)
+                self.getMostAppearedSpeciesInFilms(films)
+            case .failure(let error):
                 self.displayAlert(text: error.localizedDescription)
                 self.stopAnimating()
-                return
             }
-            
-            guard let starWarJson = starWar else { return }
-            guard let films = starWarJson.results else { return }
-            
-            self.getMovieHavingLongestOpeningCrawl(films)
-            self.getMostAppearedCharacterInFilms(films)
-            self.getMostAppearedSpeciesInFilms(films)
         }
     }
     
@@ -126,17 +127,17 @@ class StarWarController: UIViewController {
         }
         var res = ""
         arrayHavingMostCharacterCount.forEach { (elementKey) in
-            Service.sharedInstance.fetchMostAppearedCharacterName(elementKey) { [unowned self] (character, error) in
-                if let error = error {
-                    self.displayAlert(text: error.localizedDescription)
-                    self.stopAnimating()
-                    return
-                }
+            Service.sharedInstance.fetchMostAppearedCharacterName(elementKey) { [unowned self] (resJson) in
                 
-                guard let characterJson = character else { return }
-                if let characterName = characterJson.name {
-                    res += "\(characterName)\n"
-                    self.characterAppearedMostAnswerLabel.text = res
+                switch resJson {
+                case .success(let characterJson):
+                    if let characterName = characterJson.name {
+                        res += "\(characterName)\n"
+                        self.characterAppearedMostAnswerLabel.text = res
+                        self.stopAnimating()
+                    }
+                case .failure(let error):
+                    self.displayAlert(text: error.localizedDescription)
                     self.stopAnimating()
                 }
             }
@@ -146,6 +147,7 @@ class StarWarController: UIViewController {
     fileprivate func stopAnimating() {
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -178,18 +180,17 @@ class StarWarController: UIViewController {
         var res = ""
         arrayHavingLargeSpeciesCount.forEach { (elementKey) in
             
-            Service.sharedInstance.fetchMostAppearedSpeciesName(elementKey) { [unowned self] (species, error) in
-                if let error = error {
+            Service.sharedInstance.fetchMostAppearedSpeciesName(elementKey) { [unowned self] (result) in
+                
+                switch result {
+                case .success(let species):
+                    if let speciesName = species.name {
+                        res += "\(speciesName) (\(largeSpeciesCountValue))\n"
+                        self.speciesAppearedMostAnswerLabel.text = res
+                        self.stopAnimating()
+                    }
+                case .failure(let error):
                     self.displayAlert(text: error.localizedDescription)
-                    self.stopAnimating()
-                    return
-                }
-                
-                guard let speciesJson = species else { return }
-                
-                if let speciesName = speciesJson.name {
-                    res += "\(speciesName) (\(largeSpeciesCountValue))\n"
-                    self.speciesAppearedMostAnswerLabel.text = res
                     self.stopAnimating()
                 }
             }
@@ -197,18 +198,21 @@ class StarWarController: UIViewController {
     }
     
     fileprivate func displayAlert(text: String) {
-        let alertController = UIAlertController(title: text, message: "", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { [unowned self] _ in
-            self.getAnswers()
-        }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: text, message: "", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { [unowned self] _ in
+                self.getAnswers()
+            }))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     // MARK: - Handlers
     
     @objc func handleButtonAction() {
-        activityIndicatorView.startAnimating()
+        
         getAnswers()
     }
 }
