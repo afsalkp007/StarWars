@@ -73,7 +73,7 @@ class StarWarController: UIViewController {
     fileprivate func getAnswers() {
         Service.sharedInstance.fetchStarWarFilms { [unowned self] (starWar, error) in
             if let error = error {
-                print(error.localizedDescription)
+                self.displayAlert(text: error.localizedDescription)
                 self.stopAnimating()
                 return
             }
@@ -98,7 +98,7 @@ class StarWarController: UIViewController {
                 guard let index = openingCrawlArray.firstIndex(of: largestOpeningCrowl) else { return }
                 if let fileName = films[index].title {
                     self.longestOpeningCrawlAnswerLabel.text = fileName
-                    self.activityIndicatorView.stopAnimating()
+                    self.stopAnimating()
                 }
             }
         })
@@ -128,7 +128,7 @@ class StarWarController: UIViewController {
         arrayHavingMostCharacterCount.forEach { (elementKey) in
             Service.sharedInstance.fetchMostAppearedCharacterName(elementKey) { [unowned self] (character, error) in
                 if let error = error {
-                    print(error.localizedDescription)
+                    self.displayAlert(text: error.localizedDescription)
                     self.stopAnimating()
                     return
                 }
@@ -180,7 +180,7 @@ class StarWarController: UIViewController {
             
             Service.sharedInstance.fetchMostAppearedSpeciesName(elementKey) { [unowned self] (species, error) in
                 if let error = error {
-                    print(error.localizedDescription)
+                    self.displayAlert(text: error.localizedDescription)
                     self.stopAnimating()
                     return
                 }
@@ -194,6 +194,15 @@ class StarWarController: UIViewController {
                 }
             }
         }
+    }
+    
+    fileprivate func displayAlert(text: String) {
+        let alertController = UIAlertController(title: text, message: "", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { [unowned self] _ in
+            self.getAnswers()
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - Handlers
