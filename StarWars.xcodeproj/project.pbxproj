@@ -15,7 +15,7 @@
 		C207F8C2233D0E2000F018B8 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207F8C1233D0E2000F018B8 /* Extension.swift */; };
 		C207F8C4233D1A7700F018B8 /* StarWarController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207F8C3233D1A7700F018B8 /* StarWarController+UI.swift */; };
 		C207F8C7233D1D3A00F018B8 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207F8C6233D1D3A00F018B8 /* Service.swift */; };
-		C207F8C9233D1E4200F018B8 /* Modals.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207F8C8233D1E4200F018B8 /* Modals.swift */; };
+		C207F8C9233D1E4200F018B8 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207F8C8233D1E4200F018B8 /* Models.swift */; };
 		C207F8CB233D3CAD00F018B8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207F8CA233D3CAD00F018B8 /* Constants.swift */; };
 		C2E7FE9523433B020022B7CB /* AnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E7FE9423433B020022B7CB /* AnimatedButton.swift */; };
 /* End PBXBuildFile section */
@@ -31,7 +31,7 @@
 		C207F8C1233D0E2000F018B8 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C207F8C3233D1A7700F018B8 /* StarWarController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StarWarController+UI.swift"; sourceTree = "<group>"; };
 		C207F8C6233D1D3A00F018B8 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
-		C207F8C8233D1E4200F018B8 /* Modals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modals.swift; sourceTree = "<group>"; };
+		C207F8C8233D1E4200F018B8 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		C207F8CA233D3CAD00F018B8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C2E7FE9423433B020022B7CB /* AnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,12 +66,12 @@
 		C207F8A9233D0D0300F018B8 /* StarWars */ = {
 			isa = PBXGroup;
 			children = (
+				C207F8AA233D0D0300F018B8 /* AppDelegate.swift */,
 				C2E7FE9323433AEE0022B7CB /* View */,
 				C207F8C5233D1D2F00F018B8 /* Service */,
 				C207F8C0233D0E1600F018B8 /* Utils */,
 				C207F8BF233D0E0100F018B8 /* Controller */,
-				C207F8BC233D0DEF00F018B8 /* Modal */,
-				C207F8AA233D0D0300F018B8 /* AppDelegate.swift */,
+				C207F8BC233D0DEF00F018B8 /* Model */,
 				C207F8AE233D0D0300F018B8 /* Main.storyboard */,
 				C207F8B1233D0D0500F018B8 /* Assets.xcassets */,
 				C207F8B3233D0D0500F018B8 /* LaunchScreen.storyboard */,
@@ -80,12 +80,12 @@
 			path = StarWars;
 			sourceTree = "<group>";
 		};
-		C207F8BC233D0DEF00F018B8 /* Modal */ = {
+		C207F8BC233D0DEF00F018B8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C207F8C8233D1E4200F018B8 /* Modals.swift */,
+				C207F8C8233D1E4200F018B8 /* Models.swift */,
 			);
-			path = Modal;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		C207F8BF233D0E0100F018B8 /* Controller */ = {
@@ -196,7 +196,7 @@
 				C207F8C2233D0E2000F018B8 /* Extension.swift in Sources */,
 				C207F8AD233D0D0300F018B8 /* StarWarController.swift in Sources */,
 				C207F8C7233D1D3A00F018B8 /* Service.swift in Sources */,
-				C207F8C9233D1E4200F018B8 /* Modals.swift in Sources */,
+				C207F8C9233D1E4200F018B8 /* Models.swift in Sources */,
 				C207F8CB233D3CAD00F018B8 /* Constants.swift in Sources */,
 				C207F8C4233D1A7700F018B8 /* StarWarController+UI.swift in Sources */,
 				C2E7FE9523433B020022B7CB /* AnimatedButton.swift in Sources */,

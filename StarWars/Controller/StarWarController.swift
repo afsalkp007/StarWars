@@ -211,6 +211,5 @@ class StarWarController: UIViewController {
         activityIndicatorView.startAnimating()
         getAnswers()
     }
-
 }
 
