@@ -1,5 +1,5 @@
 //
-//  Models.swift
+//  Modals.swift
 //  StarWars
 //
 //  Created by Afsal's Macbook Pro on 26/09/2019.

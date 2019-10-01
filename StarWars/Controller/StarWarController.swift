@@ -23,7 +23,7 @@ class StarWarController: UIViewController {
         createLogoImageView()
     }()
     
-    lazy var button: UIButton = {
+    lazy var button: AnimatedButton = {
         createButton()
     }()
     
@@ -71,7 +71,7 @@ class StarWarController: UIViewController {
     // MARK: -  Helper Functions
     
     fileprivate func getAnswers() {
-        Service.sharedInstance.fetchStarWarFilms { (starWar, error) in
+        Service.sharedInstance.fetchStarWarFilms { [unowned self] (starWar, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -125,7 +125,7 @@ class StarWarController: UIViewController {
         }
         var res = ""
         arrayHavingMostCharacterCount.forEach { (elementKey) in
-            Service.sharedInstance.fetchMostAppearedCharacterName(elementKey) { (character, error) in
+            Service.sharedInstance.fetchMostAppearedCharacterName(elementKey) { [unowned self] (character, error) in
                 if let error = error {
                     print(error.localizedDescription)
                     return
@@ -170,7 +170,7 @@ class StarWarController: UIViewController {
         var res = ""
         arrayHavingLargeSpeciesCount.forEach { (elementKey) in
             
-            Service.sharedInstance.fetchMostAppearedSpeciesName(elementKey) { (species, error) in
+            Service.sharedInstance.fetchMostAppearedSpeciesName(elementKey) { [unowned self] (species, error) in
                 if let error = error {
                     print(error.localizedDescription)
                     return
