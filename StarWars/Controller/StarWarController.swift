@@ -137,7 +137,7 @@ class StarWarController: UIViewController {
                 if let characterName = characterJson.name {
                     res += "\(characterName)\n"
                     self.characterAppearedMostAnswerLabel.text = res
-                    self.activityIndicatorView.stopAnimating()
+                    self.stopAnimating()
                 }
             }
         }
@@ -190,7 +190,7 @@ class StarWarController: UIViewController {
                 if let speciesName = speciesJson.name {
                     res += "\(speciesName) (\(largeSpeciesCountValue))\n"
                     self.speciesAppearedMostAnswerLabel.text = res
-                    self.activityIndicatorView.stopAnimating()
+                    self.stopAnimating()
                 }
             }
         }
