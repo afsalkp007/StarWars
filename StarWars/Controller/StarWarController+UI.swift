@@ -25,7 +25,8 @@ extension StarWarController {
     
     func createButton() -> AnimatedButton {
         let button = AnimatedButton()
-        button.setImage(#imageLiteral(resourceName: "Group"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "Group"), for: .normal)
+        //button.setImage(#imageLiteral(resourceName: "Group"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.layer.cornerRadius = 15
         button.imageView?.layer.cornerRadius = 16

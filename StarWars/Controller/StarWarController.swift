@@ -74,6 +74,7 @@ class StarWarController: UIViewController {
         Service.sharedInstance.fetchStarWarFilms { [unowned self] (starWar, error) in
             if let error = error {
                 print(error.localizedDescription)
+                self.stopAnimating()
                 return
             }
             
@@ -128,6 +129,7 @@ class StarWarController: UIViewController {
             Service.sharedInstance.fetchMostAppearedCharacterName(elementKey) { [unowned self] (character, error) in
                 if let error = error {
                     print(error.localizedDescription)
+                    self.stopAnimating()
                     return
                 }
                 
@@ -138,6 +140,12 @@ class StarWarController: UIViewController {
                     self.activityIndicatorView.stopAnimating()
                 }
             }
+        }
+    }
+    
+    fileprivate func stopAnimating() {
+        DispatchQueue.main.async {
+            self.activityIndicatorView.stopAnimating()
         }
     }
     
@@ -173,6 +181,7 @@ class StarWarController: UIViewController {
             Service.sharedInstance.fetchMostAppearedSpeciesName(elementKey) { [unowned self] (species, error) in
                 if let error = error {
                     print(error.localizedDescription)
+                    self.stopAnimating()
                     return
                 }
                 
