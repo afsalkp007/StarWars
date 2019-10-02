@@ -200,7 +200,7 @@ class StarWarController: UIViewController {
     fileprivate func displayAlert(text: String) {
         DispatchQueue.main.async { [weak self] in
             let alertController = UIAlertController(title: text, message: "", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { [unowned self] _ in
+            alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in
                 self?.getAnswers()
             }))
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
