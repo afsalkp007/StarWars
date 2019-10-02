@@ -12,9 +12,9 @@ class Service {
     
     static let sharedInstance = Service()
     
-    func fetchStarWarFilms(completion: @escaping (Result<StarWar?, Error>) -> ()) {
+    func fetchStarWarFilms(completion: @escaping (Result<StarWar, Error>) -> ()) {
         
-        guard let url = URL(string: filmsUrl) else {return}
+        guard let url = URL(string: Constants.filmsUrl) else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             

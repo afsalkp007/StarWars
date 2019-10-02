@@ -8,4 +8,7 @@
 
 import Foundation
 
-public let filmsUrl = "https://swapi.co/api/films/"
+struct Constants {
+    
+    static let filmsUrl = "https://swapi.co/api/films/"
+}

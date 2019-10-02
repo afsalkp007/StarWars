@@ -76,7 +76,7 @@ class StarWarController: UIViewController {
             
             switch res {
             case .success(let starWarJson):
-                guard let films = starWarJson?.results else { return }
+                guard let films = starWarJson.results else { return }
                 
                 self.getMovieHavingLongestOpeningCrawl(films)
                 self.getMostAppearedCharacterInFilms(films)
