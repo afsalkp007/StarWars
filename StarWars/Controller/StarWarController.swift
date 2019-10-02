@@ -145,9 +145,9 @@ class StarWarController: UIViewController {
     }
     
     fileprivate func stopAnimating() {
-        DispatchQueue.main.async {
-            self.activityIndicatorView.stopAnimating()
-            self.view.layoutIfNeeded()
+        DispatchQueue.main.async { [weak self] in
+            self?.activityIndicatorView.stopAnimating()
+            self?.view.layoutIfNeeded()
         }
     }
     
@@ -198,14 +198,14 @@ class StarWarController: UIViewController {
     }
     
     fileprivate func displayAlert(text: String) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             let alertController = UIAlertController(title: text, message: "", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { [unowned self] _ in
-                self.getAnswers()
+                self?.getAnswers()
             }))
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
-            self.present(alertController, animated: true, completion: nil)
+            self?.present(alertController, animated: true, completion: nil)
         }
     }
     
